@@ -2,8 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes');
+const http = require('http');
+const { setupWebSocket } = require('./websocket');
 
 const app = express();
+const server = http.Server(app);
+
+setupWebSocket(server);
 
 //Dados serão salvos no MongoDB, um banco de dados não relacional (NoSQL)
 //string de conexão
@@ -20,4 +25,4 @@ app.use(express.json());
 app.use(routes);
 
 
-app.listen(3333);
+server.listen(3333);
